@@ -58,5 +58,15 @@ public class AddressBookServiceImp implements AddressBookService{
         return addressbookRepository.findById(id).orElseThrow(() -> new CustomException("Employee Not found :- "+id));
     }
 
+    @Override
+    public List<AddressBookData> getdeletedData() {
+        return deletedList;
+    }
+
+    @Override
+    public List<AddressBookData> getoriginalData() {
+        return updatedList;
+    }
+
 
 }

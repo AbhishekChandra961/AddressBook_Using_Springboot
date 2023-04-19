@@ -49,5 +49,16 @@ public class MyController {
         ResponceDto responceDto = new ResponceDto("Data for the token is ",addressBookData);
         return new ResponseEntity<>(responceDto, HttpStatus.CREATED);
     }
-
+    @GetMapping("/DeletedData")
+    public ResponceDto getDeletedData(){
+        List<AddressBookData> data=addressBookService.getdeletedData();
+        ResponceDto responceDto=new ResponceDto("The deleted data ",data);
+        return responceDto;
+    }
+    @GetMapping("/originalData")
+    public ResponceDto getoriginalData(){
+        List<AddressBookData> data=addressBookService.getoriginalData();
+        ResponceDto responceDto=new ResponceDto("The deleted data ",data);
+        return responceDto;
+    }
 }

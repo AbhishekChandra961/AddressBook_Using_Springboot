@@ -18,4 +18,7 @@ public interface AddressBookService {
     List<AddressBookData> getAllData();
 
     AddressBookData getdataByToken(String token);
+    List<AddressBookData> getdeletedData();
+
+    List<AddressBookData> getoriginalData();
 }
