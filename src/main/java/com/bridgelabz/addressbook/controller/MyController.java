@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.dto.AddressBookDto;
 import com.bridgelabz.addressbook.dto.ResponceDto;
+import com.bridgelabz.addressbook.dto.Validation;
 import com.bridgelabz.addressbook.model.AddressBookData;
 import com.bridgelabz.addressbook.service.AddressBookService;
 import jakarta.validation.Valid;
@@ -16,10 +17,10 @@ import java.util.List;
 public class MyController {
     @Autowired
     private AddressBookService addressBookService;
-    @PostMapping("/add")
-    public ResponceDto addData(@Valid @RequestBody AddressBookDto addressBookDto){
-        return addressBookService.addData(addressBookDto);
-    }
+//    @PostMapping("/add")
+//    public ResponceDto addData(@Valid @RequestBody AddressBookDto addressBookDto){
+//        return addressBookService.addData(addressBookDto);
+//    }
     @GetMapping("/{id}")
     public ResponceDto getDataByid(@PathVariable int id){
         AddressBookData addressBookData = addressBookService.getById(id);
@@ -60,5 +61,16 @@ public class MyController {
         List<AddressBookData> data=addressBookService.getoriginalData();
         ResponceDto responceDto=new ResponceDto("The deleted data ",data);
         return responceDto;
+    }
+    @PostMapping("/register")
+    public String register(@RequestBody AddressBookDto addressBookDto){
+
+        return addressBookService.register(addressBookDto);
+    }
+    @PutMapping("/validate")
+    public String validation(@RequestBody Validation validation ){
+
+        return addressBookService.validate(validation) ;
+
     }
 }

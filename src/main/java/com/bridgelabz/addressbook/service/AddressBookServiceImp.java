@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.service;
 
 import com.bridgelabz.addressbook.dto.AddressBookDto;
 import com.bridgelabz.addressbook.dto.ResponceDto;
+import com.bridgelabz.addressbook.dto.Validation;
 import com.bridgelabz.addressbook.exception.CustomException;
 import com.bridgelabz.addressbook.model.AddressBookData;
 import com.bridgelabz.addressbook.repository.AddressbookRepository;
@@ -24,18 +25,18 @@ public class AddressBookServiceImp implements AddressBookService{
     private JWTToken jwtToken;
     @Autowired
     private EmailService emailService;
-    @Override
-    public ResponceDto addData(AddressBookDto addressBookDto) {
-        AddressBookData addressBookData=new AddressBookData(addressBookDto);
-        addressbookRepository.save(addressBookData);
-        String token=jwtToken.createToken(addressBookData.getId());
-        emailService.sendEmail(addressBookDto.getEmail(),"The data added successfully ","hi  .."+addressBookDto.getName()+"\n your data added succsessfully ");
-
-        addressBookData.setToken(token);
-        list.add(addressBookData);
-        ResponceDto responceDto=new ResponceDto(token,addressBookData);
-        return responceDto;
-    }
+//    @Override
+//    public ResponceDto addData(AddressBookDto addressBookDto) {
+//        AddressBookData addressBookData=new AddressBookData(addressBookDto);
+//        addressbookRepository.save(addressBookData);
+//        String token=jwtToken.createToken(addressBookData.getId());
+//        emailService.sendEmail(addressBookDto.getEmail(),"The data added successfully ","hi  .."+addressBookDto.getName()+"\n your data added succsessfully ");
+//
+//        addressBookData.setToken(token);
+//        list.add(addressBookData);
+//        ResponceDto responceDto=new ResponceDto(token,addressBookData);
+//        return responceDto;
+//    }
 
     @Override
     public AddressBookData getById(int id) {
@@ -71,15 +72,42 @@ public class AddressBookServiceImp implements AddressBookService{
     @Override
     public List<AddressBookData> getdeletedData() {
         return deletedList;
-//        List<> data=new ArrayList<>();
-//        myRepo.findAll().forEach(datas -> data.add(datas));
-//        return data;
 
     }
 
     @Override
     public List<AddressBookData> getoriginalData() {
+
         return updatedList;
+    }
+
+    @Override
+    public String register(AddressBookDto addressBookDto) {
+        AddressBookData addressBookData=new AddressBookData(addressBookDto);
+        String token=jwtToken.createToken(addressBookData.getId());
+        long genarateOtp= (long) ((Math.random() * 9999) % 8998)+1001;
+        AddressBookData data=new AddressBookData(token,genarateOtp);
+        addressBookData.setOtp(genarateOtp);
+        addressBookData.setToken(token);
+//        addressbookRepository.save(addressBookData);
+        emailService.sendEmail(addressBookData.getEmail(),"The data added successfully ","hi  .."+addressBookData.getName()+"\n your data added succsessfully "+"\n your otp is  <- "+genarateOtp+" ->");
+        return "otp genarated sucsussfully      - " +  token;
+    }
+
+    @Override
+    public String validate(Validation validation) {
+        String email=validation.getEmail();
+        long otp=addressbookRepository.findByEmail(email);
+        if(otp==validation.getOtp()){
+            AddressBookData addressBookData =new AddressBookData();
+            addressBookData.setVarifyOtp(true);
+            addressbookRepository.save(addressBookData);
+
+            return "validation done  "+validation.getEmail();
+        }
+        else {
+            return "validation not done";
+        }
     }
 
 
