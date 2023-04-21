@@ -17,10 +17,6 @@ import java.util.List;
 public class MyController {
     @Autowired
     private AddressBookService addressBookService;
-//    @PostMapping("/add")
-//    public ResponceDto addData(@Valid @RequestBody AddressBookDto addressBookDto){
-//        return addressBookService.addData(addressBookDto);
-//    }
     @GetMapping("/{id}")
     public ResponceDto getDataByid(@PathVariable int id){
         AddressBookData addressBookData = addressBookService.getById(id);
@@ -62,15 +58,5 @@ public class MyController {
         ResponceDto responceDto=new ResponceDto("The deleted data ",data);
         return responceDto;
     }
-    @PostMapping("/register")
-    public String register(@RequestBody AddressBookDto addressBookDto){
 
-        return addressBookService.register(addressBookDto);
-    }
-    @PutMapping("/validate")
-    public String validation(@RequestBody Validation validation ){
-
-        return addressBookService.validate(validation) ;
-
-    }
 }

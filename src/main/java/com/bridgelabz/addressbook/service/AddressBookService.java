@@ -22,6 +22,5 @@ public interface AddressBookService {
     List<AddressBookData> getdeletedData();
 
     List<AddressBookData> getoriginalData();
-    String register(AddressBookDto addressBookDto);
-    String validate(Validation validation);
+
 }
