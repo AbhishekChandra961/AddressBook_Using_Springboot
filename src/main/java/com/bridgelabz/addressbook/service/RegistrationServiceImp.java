@@ -29,14 +29,15 @@ public class RegistrationServiceImp implements RegistrationService{
 
         System.out.println("the-"+mail+"the int mail is ");
         if(mail==null){
-            return "Enter theunique Email id ";
-        }else {
             AddressBookData addressBookData = new AddressBookData(addressBookDto);
             long genarateOtp = (long) ((Math.random() * 9999) % 8998) + 1001;
             addressBookData.setOtp(genarateOtp);
             addressbookRepository.save(addressBookData);
             emailService.sendEmail(addressBookData.getEmail(), "The data added successfully ", "hi  .." + addressBookData.getName() + "\n your data added succsessfully " + "\n your otp is  <- " + genarateOtp + " ->");
             return "otp genarated sucsussfully      - ";
+
+        }else {
+            return "Enter theunique Email id ";
         }
     }
 

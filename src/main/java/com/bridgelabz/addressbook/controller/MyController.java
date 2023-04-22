@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/addressbook")
 public class MyController {
     @Autowired
     private AddressBookService addressBookService;
