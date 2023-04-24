@@ -9,7 +9,5 @@ public interface RegistrationService {
 
     String validate(Validation validation);
     String login(Login login);
-    String forgotPassword(String email);
 
-    String resetpassword(String email,String password);
 }
